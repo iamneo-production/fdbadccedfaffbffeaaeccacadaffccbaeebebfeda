@@ -1,0 +1,32 @@
+<div>
+  <div>
+      <app-navbar></app-navbar>
+  </div>
+  <div id="container">
+      <div id="grid1">
+          <app-searchbar (searchTextChanged)="onSearchTextEntered($event)"></app-searchbar>
+          <div id="newFood">
+              <label (click)="toggleFormDiv()">Add New Food</label>
+          </div>
+          <div [hidden] ="isShowForm" id="formDiv">
+              <app-form (sendData) = "data=$event"></app-form>
+          </div>
+      </div>
+      <div id="grid2">
+        <div id="totalCalories">
+          <label>Today's Foods {{cData}} cal</label>
+          <br>
+          <br>    
+          <ol *ngFor = "let item of fData;let i = index" >
+              <li>{{item.name}} {{item.calories}} &nbsp;x<span *ngIf="qData[i]; else elseBlock">{{qData[i]}}</span></li>
+              <ng-template #elseBlock>
+                  1
+              </ng-template>
+          </ol>
+        </div>
+      </div>
+      <div  id="displayContainer">
+          <app-app-food-list [stext] = "searchText" [parentData] = "data" (FoodData) = "fData = $event" (QuantityData) = "qData=$event" (CaloryData) = "cData=$event"></app-app-food-list>
+       </div>  
+  </div>
+</div>
